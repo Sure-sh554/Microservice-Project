@@ -2,10 +2,15 @@ package com.microservice.Department.Servie.Controller;
 
 import com.microservice.Department.Servie.Service.DepartmentService;
 import com.microservice.Department.Servie.dto.DepartmentDto;
+import com.microservice.Department.Servie.exception.ErrorDetails;
+import com.microservice.Department.Servie.exception.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
+
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("api/departments")
@@ -22,10 +27,11 @@ public class DepartmentController {
         DepartmentDto departmentDto1 = departmentService.saveDepartment(departmentDto);
         return new ResponseEntity<>(departmentDto1, HttpStatus.CREATED);
     }
-@GetMapping("/{code}")
-    public ResponseEntity<DepartmentDto> getDepartmentByCode(@PathVariable String code){
-       DepartmentDto departmentDto= departmentService.getDepartmentByCode(code);
-        return new ResponseEntity<>(departmentDto,HttpStatus.OK);
+
+    @GetMapping("/{code}")
+    public ResponseEntity<DepartmentDto> getDepartmentByCode(@PathVariable("code") Long code) {
+        DepartmentDto departmentDto = departmentService.getDepartmentByCode(code);
+        return new ResponseEntity<>(departmentDto, HttpStatus.OK);
     }
 
 

@@ -4,6 +4,7 @@ import com.microservice.Department.Servie.Entity.Department;
 import com.microservice.Department.Servie.Repository.DepartmentRepository;
 import com.microservice.Department.Servie.Service.DepartmentService;
 import com.microservice.Department.Servie.dto.DepartmentDto;
+import com.microservice.Department.Servie.exception.ResourceNotFoundException;
 import com.microservice.Department.Servie.mapper.AutoDepartmentMapper;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -46,8 +47,11 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public DepartmentDto getDepartmentByCode(String departmentCode) {
-        Department department = departmentRepository.findByDepartmentCode(departmentCode);
+    public DepartmentDto getDepartmentByCode(Long code) {
+        Department department = departmentRepository.findById(code)
+                .orElseThrow(
+                        ()->new ResourceNotFoundException("Department","code",code)
+                );
 //        DepartmentDto departmentDto = new DepartmentDto(
 //                department.getId(),
 //                department.getDepartmentName(),
