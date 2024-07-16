@@ -47,11 +47,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public DepartmentDto getDepartmentByCode(Long code) {
-        Department department = departmentRepository.findById(code)
-                .orElseThrow(
-                        ()->new ResourceNotFoundException("Department","code",code)
-                );
+    public DepartmentDto getDepartmentByCode(String departmentCode) {
+        Department department = departmentRepository.findByDepartmentCode(departmentCode);
+
 //        DepartmentDto departmentDto = new DepartmentDto(
 //                department.getId(),
 //                department.getDepartmentName(),
